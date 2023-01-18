@@ -7,6 +7,11 @@ import { api } from "../utils/api";
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
+  const test = api.example.testMutation.useMutation();
+  const buttonClick = () => {
+    test.mutate()
+  }
+  
   return (
     <>
       <Head>
@@ -46,6 +51,7 @@ const Home: NextPage = () => {
           <p className="text-2xl text-white">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p>
+          <button className="text-white" onClick={buttonClick}> BUTTON</button>
         </div>
       </main>
     </>
