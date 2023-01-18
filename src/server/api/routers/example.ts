@@ -17,4 +17,12 @@ export const exampleRouter = createTRPCRouter({
     .mutation(async ({ ctx }) => {
       return await ctx.prisma.example.create({data: {}});
     }),
+  starMutation: publicProcedure
+    .input(z.object({name: z.string(), constellation: z.string()}))
+    .mutation(async ({ctx, input}) => {
+      return await ctx.prisma.star.create({data: {
+        name: input.name,
+        constellation: input.constellation
+      }})
+    })
 });

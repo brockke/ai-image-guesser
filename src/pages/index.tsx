@@ -6,12 +6,20 @@ import { api } from "../utils/api";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
+  const getAll = api.example.getAll.useQuery();
+  
   const test = api.example.testMutation.useMutation();
   const buttonClick = () => {
     test.mutate()
   }
   
+  const starTest = api.example.starMutation.useMutation();
+  const starClick = () => {
+    starTest.mutate({
+      name: "BIG STAR",
+      constellation: "noideadude"
+    })
+  }
   return (
     <>
       <Head>
@@ -52,6 +60,7 @@ const Home: NextPage = () => {
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p>
           <button className="text-white" onClick={buttonClick}> BUTTON</button>
+          <button className="text-white" onClick={starClick}> STAR</button>
         </div>
       </main>
     </>
