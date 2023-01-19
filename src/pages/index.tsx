@@ -7,7 +7,10 @@ import { api } from "../utils/api";
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const getAll = api.example.getAll.useQuery();
-  
+  const listItems = getAll.data?.map(example => {
+    return <li key={example.id}>{example.id}</li>
+  })
+
   const test = api.example.testMutation.useMutation();
   const buttonClick = () => {
     test.mutate()
@@ -61,6 +64,7 @@ const Home: NextPage = () => {
           </p>
           <button className="text-white" onClick={buttonClick}> BUTTON</button>
           <button className="text-white" onClick={starClick}> STAR</button>
+          <ul className="text-white">{listItems}</ul>
         </div>
       </main>
     </>
