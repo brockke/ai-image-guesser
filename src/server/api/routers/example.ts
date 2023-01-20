@@ -24,5 +24,5 @@ export const exampleRouter = createTRPCRouter({
         name: input.name,
         constellation: input.constellation
       }})
-    })
+    }),
 });
