@@ -83,7 +83,7 @@ const Home: NextPage = () => {
             <div className="pt-2">
               <div className="grid grid-cols-3 gap-1">
                 {imageUrls.map((url) => (
-                  <button key={url.id}>
+                  <button className="backdrop-invert hover:opacity-75" key={url.id}>
                     <img key={url.id} src={url.url} className="col-span-1" alt="Grid Image" />
                   </button>
                 ))}
