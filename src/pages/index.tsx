@@ -72,7 +72,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="bg-white drop-shadow-lg">
-          <div className="p-2 outline outline-1 outline-gray-300">
+          <div className="p-2 border-x border-t border-gray-300">
             <div className="bg-blue-500">
               <div className="p-6">
                 <h3 className="text-white">Select all images with</h3>
@@ -90,8 +90,8 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="p-2 outline outline-1 outline-gray-300">
-            <div className="flex flex-1 outline-4">
+          <div className="p-2 border border-gray-300">
+            <div className="flex flex-1">
               <button className="group hover:bg-gray-200 active:bg-gray-300">
                 <svg className="h-8 w-8 m-2 fill-current text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="M17.65 6.35A7.958 7.958 0 0 0 12 4a8 8 0 0 0-8 8 8 8 0 0 0 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18a6 6 0 0 1-6-6 6 6 0 0 1 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35Z"/>
