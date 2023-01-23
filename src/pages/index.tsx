@@ -1,8 +1,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import { api } from "../utils/api";
+import { getInitialIds } from "../utils/getInitialIds";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -24,44 +26,49 @@ const Home: NextPage = () => {
   //   })
   // }
 
-  const imageUrls = [
-    {
-      id: 0,
-      url:'https://picsum.photos/100?random=1',
-    },
-    {
-      id: 1,
-      url:'https://picsum.photos/100?random=2',
-    },
-    {
-      id: 2,
-      url:'https://picsum.photos/100?random=3',
-    },
-    {
-      id: 3,
-      url:'https://picsum.photos/100?random=4',
-    },
-    {
-      id: 4,
-      url:'https://picsum.photos/100?random=5',
-    },
-    {
-      id: 5,
-      url:'https://picsum.photos/100?random=6',
-    },
-    {
-      id: 6,
-      url:'https://picsum.photos/100?random=7',
-    },
-    {
-      id: 7,
-      url:'https://picsum.photos/100?random=8',
-    },
-    {
-      id: 8,
-      url:'https://picsum.photos/100?random=9',
-    },
-  ];
+  const [ids, setIds] = useState([0]);
+  useEffect(() => setIds(getInitialIds()), [])
+
+  // const imageUrl1 = api.example.getImageByID.useQuery({id:ids[0]!})
+
+  // const imageUrls = [
+  //   {
+  //     id: 0,
+  //     url:'https://picsum.photos/100?random=1',
+  //   },
+  //   {
+  //     id: 1,
+  //     url:'https://picsum.photos/100?random=2',
+  //   },
+  //   {
+  //     id: 2,
+  //     url:'https://picsum.photos/100?random=3',
+  //   },
+  //   {
+  //     id: 3,
+  //     url:'https://picsum.photos/100?random=4',
+  //   },
+  //   {
+  //     id: 4,
+  //     url:'https://picsum.photos/100?random=5',
+  //   },
+  //   {
+  //     id: 5,
+  //     url:'https://picsum.photos/100?random=6',
+  //   },
+  //   {
+  //     id: 6,
+  //     url:'https://picsum.photos/100?random=7',
+  //   },
+  //   {
+  //     id: 7,
+  //     url:'https://picsum.photos/100?random=8',
+  //   },
+  //   {
+  //     id: 8,
+  //     url:'https://picsum.photos/100?random=9',
+  //   },
+  // ];
 
   return (
     <>
@@ -82,11 +89,11 @@ const Home: NextPage = () => {
             </div>
             <div className="pt-2">
               <div className="grid grid-cols-3 gap-1">
-                {imageUrls.map((url) => (
+                {/* {imageUrls.map((url) => (
                   <button className="backdrop-invert hover:opacity-75" key={url.id}>
                     <img key={url.id} src={url.url} className="col-span-1" alt="Grid Image" />
                   </button>
-                ))}
+                ))} */}
               </div>
             </div>
           </div>
