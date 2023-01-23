@@ -94,6 +94,15 @@ const Home: NextPage = () => {
                     <img key={url.id} src={url.url} className="col-span-1" alt="Grid Image" />
                   </button>
                 ))} */}
+                <CaptchaImage id={0} />
+                <CaptchaImage id={1} />
+                <CaptchaImage id={2} />
+                <CaptchaImage id={3} />
+                <CaptchaImage id={4} />
+                <CaptchaImage id={5} />
+                <CaptchaImage id={6} />
+                <CaptchaImage id={7} />
+                <CaptchaImage id={8} />
               </div>
             </div>
           </div>
@@ -122,5 +131,15 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+const CaptchaImage = (props: {id: number}) => {
+
+  const imageUrl = api.example.getImageByID.useQuery({id:props.id})   
+  return (
+    <button className="backdrop-invert hover:opacity-75" key={props.id}>
+      <img key={props.id} src={imageUrl.data?.download_url} className="col-span-1" alt="Grid Image" />
+    </button>
+  )
+}
 
 export default Home;

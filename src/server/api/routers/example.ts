@@ -25,4 +25,10 @@ export const exampleRouter = createTRPCRouter({
         constellation: input.constellation
       }})
     }),
+  getImageByID: publicProcedure
+    .input(z.object({id: z.number()}))
+    .query(async ({input}) => {
+      const respone = await fetch(`https://picsum.photos/id/${input.id}/info`)
+      return respone.json();
+    })
 });
