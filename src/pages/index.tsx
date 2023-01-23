@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -124,10 +125,11 @@ const Home: NextPage = () => {
 
 const CaptchaImage = (props: {id: number}) => {
 
-  const imageUrl = api.example.getImageByID.useQuery({id:props.id})   
+  type returnType = ReturnType<typeof api.example.getImageByID.useQuery>
+  const imageUrl:returnType = api.example.getImageByID.useQuery({id:props.id})   
   return (
-    <button className="backdrop-invert hover:opacity-75" key={props.id}>
-      <img key={props.id} src={imageUrl.data?.download_url} className="col-span-1 object-cover w-28 h-28" alt="Grid Image" />
+    <button className="backdrop-invert hover:opacity-75">
+      <img src={imageUrl.data?.download_url} className="col-span-1 object-cover w-28 h-28" alt="Grid Image" />
     </button>
   )
 }

@@ -1,5 +1,5 @@
 const ID_COUNT = 9;
-const MAX_ID = 500;
+const MAX_ID = 50;
 
 export const getRandomId: (ids: number[]) => number = (ids: number[]) => {
   const id = Math.floor(Math.random() * MAX_ID);
