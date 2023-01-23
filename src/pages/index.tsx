@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { api } from "../utils/api";
@@ -89,20 +88,11 @@ const Home: NextPage = () => {
             </div>
             <div className="pt-2">
               <div className="grid grid-cols-3 gap-1">
-                {/* {imageUrls.map((url) => (
-                  <button className="backdrop-invert hover:opacity-75" key={url.id}>
-                    <img key={url.id} src={url.url} className="col-span-1" alt="Grid Image" />
-                  </button>
-                ))} */}
-                <CaptchaImage id={0} />
-                <CaptchaImage id={1} />
-                <CaptchaImage id={2} />
-                <CaptchaImage id={3} />
-                <CaptchaImage id={4} />
-                <CaptchaImage id={5} />
-                <CaptchaImage id={6} />
-                <CaptchaImage id={7} />
-                <CaptchaImage id={8} />
+                {ids.map((id) => (
+                  <div key={id}>
+                    <CaptchaImage id={id} />
+                  </div> 
+                ))}
               </div>
             </div>
           </div>
@@ -137,7 +127,7 @@ const CaptchaImage = (props: {id: number}) => {
   const imageUrl = api.example.getImageByID.useQuery({id:props.id})   
   return (
     <button className="backdrop-invert hover:opacity-75" key={props.id}>
-      <img key={props.id} src={imageUrl.data?.download_url} className="col-span-1" alt="Grid Image" />
+      <img key={props.id} src={imageUrl.data?.download_url} className="col-span-1 object-cover w-28 h-28" alt="Grid Image" />
     </button>
   )
 }
