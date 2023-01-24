@@ -24,3 +24,30 @@ model Star {
   name            String    @db.VarChar(255)
   constellation   String    @db.VarChar(255)
 }
+
+model Image {
+  id          Int       @default(autoincrement()) @id
+  url         String  
+  imageTag    ImageTag?
+  voteFor     Vote[]
+}
+
+model ImageTag {
+  id            String    @id @default(cuid())
+  tag           Tag
+  image         Image     @relation(fields: [imageId], references: [id])
+  imageId       Int       @unique
+}
+
+model Vote {
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now())
+  votedFor    Image       @relation(fields: [imageId], references: [id])
+  imageId     Int
+  @@index([imageId])
+}
+
+enum Tag {
+  NOAI
+  AI
+}
