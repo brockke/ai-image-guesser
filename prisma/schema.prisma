@@ -37,6 +37,7 @@ model ImageTag {
   tag           Tag
   image         Image     @relation(fields: [imageId], references: [id])
   imageId       Int       @unique
+  @@index([imageId])
 }
 
 model Vote {
