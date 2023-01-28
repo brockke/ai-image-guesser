@@ -1,8 +1,13 @@
+// Because of the way the project is setup; refrences to 'server.mjs' have to be removed
+// from db.ts when running this script because ts-node doesn't allow the type of module 
+// that is imported there.
 import { prisma } from "../src/server/db";
 import S3Encode from "s3encode"
 import fs from 'fs';
 
+//This needs a folder with files in it
 const testFolder = 'scripts/midjourney/'
+// const testFolder = 'scripts/illustration/'
 const url = 'https://ai-image-guesser.s3.amazonaws.com/midjourney/'
 
 const doBackfill = async () => {
@@ -20,6 +25,7 @@ const doBackfill = async () => {
     url: item,
   }));
 
+  // For some reason typescript believes this is any when it has a type
   const creation = await prisma.image.createMany({
     data: formattedData,
   });
