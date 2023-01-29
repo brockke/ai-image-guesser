@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { api } from "../utils/api";
 import { getInitialIds } from "../utils/getInitialIds";
+import Trpc from "./api/trpc/[trpc]";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -26,49 +27,16 @@ const Home: NextPage = () => {
   //   })
   // }
 
-  const [ids, setIds] = useState([0]);
-  useEffect(() => setIds(getInitialIds()), [])
+  // const [ids, setIds] = useState();
+  // useEffect(() => setIds(api.example.getInitialIds.useQuery()), [])
 
+  const {data: captchaImages, refetch, isLoading} = api.example.getInitialIds.useQuery(undefined, {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+  // console.log(data.data);
   // const imageUrl1 = api.example.getImageByID.useQuery({id:ids[0]!})
-
-  // const imageUrls = [
-  //   {
-  //     id: 0,
-  //     url:'https://picsum.photos/100?random=1',
-  //   },
-  //   {
-  //     id: 1,
-  //     url:'https://picsum.photos/100?random=2',
-  //   },
-  //   {
-  //     id: 2,
-  //     url:'https://picsum.photos/100?random=3',
-  //   },
-  //   {
-  //     id: 3,
-  //     url:'https://picsum.photos/100?random=4',
-  //   },
-  //   {
-  //     id: 4,
-  //     url:'https://picsum.photos/100?random=5',
-  //   },
-  //   {
-  //     id: 5,
-  //     url:'https://picsum.photos/100?random=6',
-  //   },
-  //   {
-  //     id: 6,
-  //     url:'https://picsum.photos/100?random=7',
-  //   },
-  //   {
-  //     id: 7,
-  //     url:'https://picsum.photos/100?random=8',
-  //   },
-  //   {
-  //     id: 8,
-  //     url:'https://picsum.photos/100?random=9',
-  //   },
-  // ];
 
   return (
     <>
@@ -89,10 +57,8 @@ const Home: NextPage = () => {
             </div>
             <div className="pt-2">
               <div className="grid grid-cols-3 gap-1">
-                {ids.map((id) => (
-                  <div key={id}>
-                    <CaptchaImage id={id} />
-                  </div> 
+                {captchaImages && captchaImages.map((image) => (
+                  <CaptchaImage key={image.id} id={image.id} url={image.url} />
                 ))}
               </div>
             </div>
@@ -123,13 +89,17 @@ const Home: NextPage = () => {
   );
 };
 
-const CaptchaImage = (props: {id: number}) => {
+const CaptchaImage = (props: {id: number, url: string}) => {
 
   type returnType = ReturnType<typeof api.example.getImageByID.useQuery>
-  const imageUrl:returnType = api.example.getImageByID.useQuery({id:props.id})   
+  // const imageUrl:returnType = api.example.getImageByID.useQuery({id:props.id}, {
+  //   refetchInterval: false,
+  //   refetchOnReconnect: false,
+  //   refetchOnWindowFocus: false,
+  // })   
   return (
     <button className="backdrop-invert hover:opacity-75">
-      <img src={imageUrl.data?.download_url} className="col-span-1 object-cover w-28 h-28" alt="Grid Image" />
+      <img src={props.url} className="col-span-1 object-cover w-32 h-32" alt="Grid Image" />
     </button>
   )
 }
