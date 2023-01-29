@@ -25,7 +25,6 @@ const doBackfill = async () => {
     url: item,
   }));
 
-  // For some reason typescript believes this is any when it has a type
   const creation = await prisma.image.createMany({
     data: formattedData,
   });
