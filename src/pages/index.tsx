@@ -30,13 +30,17 @@ const Home: NextPage = () => {
   // const [ids, setIds] = useState();
   // useEffect(() => setIds(api.example.getInitialIds.useQuery()), [])
 
-  const {data: captchaImages, refetch, isLoading} = api.example.getInitialIds.useQuery(undefined, {
-    refetchInterval: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-  });
+  
   // console.log(data.data);
   // const imageUrl1 = api.example.getImageByID.useQuery({id:ids[0]!})
+
+  // const {data: captchaImages, refetch, isLoading} = api.example.getInitialIds.useQuery(undefined, {
+  //   refetchInterval: false,
+  //   refetchOnReconnect: false,
+  //   refetchOnWindowFocus: false,
+  // });
+
+  const initialIds = getInitialIds();
 
   return (
     <>
@@ -57,9 +61,10 @@ const Home: NextPage = () => {
             </div>
             <div className="pt-2">
               <div className="grid grid-cols-3 gap-1">
-                {captchaImages && captchaImages.map((image) => (
-                  <CaptchaImage key={image.id} id={image.id} url={image.url} />
-                ))}
+                {initialIds && initialIds.map((id) => (
+                  <CaptchaImage key={id} id={id}/>
+                ))
+                }
               </div>
             </div>
           </div>
@@ -89,17 +94,37 @@ const Home: NextPage = () => {
   );
 };
 
-const CaptchaImage = (props: {id: number, url: string}) => {
+const CaptchaImage = (props: {id: number}) => {
 
-  type returnType = ReturnType<typeof api.example.getImageByID.useQuery>
+  // type returnType = ReturnType<typeof api.example.getImageByID.useQuery>
   // const imageUrl:returnType = api.example.getImageByID.useQuery({id:props.id}, {
   //   refetchInterval: false,
   //   refetchOnReconnect: false,
   //   refetchOnWindowFocus: false,
   // })   
+
+  // const {data: image, refetch, isLoading} = api.example.getRandomImage.useQuery(undefined, {
+  //   refetchInterval: false,
+  //   refetchOnReconnect: false,
+  //   refetchOnWindowFocus: false,
+  // });
+
+  // const [image, setImage] = useState(api.example.getRandomImage.useQuery(undefined, {
+  //   refetchInterval: false,
+  //   refetchOnReconnect: false,
+  //   refetchOnWindowFocus: false,
+  // }))
+
+  
+  const {data: image, refetch, isLoading} = api.example.getImageByID.useQuery(props, {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+  
   return (
     <button className="backdrop-invert hover:opacity-75">
-      <img src={props.url} className="col-span-1 object-cover w-32 h-32" alt="Grid Image" />
+      <img src={image?.url} className="col-span-1 object-cover w-32 h-32" alt="Grid Image" />
     </button>
   )
 }

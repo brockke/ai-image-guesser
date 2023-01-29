@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getInitialIds } from "../../../utils/getInitialIds";
+import { getInitialIds, getRandomId } from "../../../utils/getInitialIds";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -28,11 +28,23 @@ export const exampleRouter = createTRPCRouter({
     }),
   getImageByID: publicProcedure
     .input(z.object({id: z.number()}))
-    .query(async ({input}) => {
-      const respone = await fetch(`https://picsum.photos/id/${input.id}/info`)
-      return respone.json();
+    .query(({ ctx, input }) => {
+      return ctx.prisma.image.findFirst({
+        where: {
+          id: input.id
+        }
+      })
     }),
-  getInitialIds: publicProcedure
+  getRandomImage: publicProcedure
+    .query(({ ctx }) => {
+      const id = getRandomId([])
+      return ctx.prisma.image.findFirst({
+        where: {
+          id: id
+        }
+      })
+    }),
+  getInitialImages: publicProcedure
     .query(({ ctx }) => {
       const ids = getInitialIds()
       return ctx.prisma.image.findMany({
