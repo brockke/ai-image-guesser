@@ -4,43 +4,11 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 
 import { api } from "../utils/api";
-import { getInitialIds } from "../utils/getInitialIds";
+import { getInitialIds, getRandomId } from "../utils/getInitialIds";
 import Trpc from "./api/trpc/[trpc]";
 
 const Home: NextPage = () => {
-  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
-  // const getAll = api.example.getAll.useQuery();
-  // const listItems = getAll.data?.map(example => {
-  //   return <li key={example.id}>{example.id}</li>
-  // })
-
-  // const test = api.example.testMutation.useMutation();
-  // const buttonClick = () => {
-  //   test.mutate()
-  // }
-  
-  // const starTest = api.example.starMutation.useMutation();
-  // const starClick = () => {
-  //   starTest.mutate({
-  //     name: "BIG STAR",
-  //     constellation: "noideadude"
-  //   })
-  // }
-
-  // const [ids, setIds] = useState();
-  // useEffect(() => setIds(api.example.getInitialIds.useQuery()), [])
-
-  
-  // console.log(data.data);
-  // const imageUrl1 = api.example.getImageByID.useQuery({id:ids[0]!})
-
-  // const {data: captchaImages, refetch, isLoading} = api.example.getInitialIds.useQuery(undefined, {
-  //   refetchInterval: false,
-  //   refetchOnReconnect: false,
-  //   refetchOnWindowFocus: false,
-  // });
-
-  const initialIds = getInitialIds();
+  const ids = getInitialIds();
 
   return (
     <>
@@ -61,7 +29,7 @@ const Home: NextPage = () => {
             </div>
             <div className="pt-2">
               <div className="grid grid-cols-3 gap-1">
-                {initialIds && initialIds.map((id) => (
+                {ids && ids.map((id) => (
                   <CaptchaImage key={id} id={id}/>
                 ))
                 }
@@ -97,33 +65,20 @@ const Home: NextPage = () => {
 const CaptchaImage = (props: {id: number}) => {
 
   // type returnType = ReturnType<typeof api.example.getImageByID.useQuery>
-  // const imageUrl:returnType = api.example.getImageByID.useQuery({id:props.id}, {
-  //   refetchInterval: false,
-  //   refetchOnReconnect: false,
-  //   refetchOnWindowFocus: false,
-  // })   
 
-  // const {data: image, refetch, isLoading} = api.example.getRandomImage.useQuery(undefined, {
-  //   refetchInterval: false,
-  //   refetchOnReconnect: false,
-  //   refetchOnWindowFocus: false,
-  // });
-
-  // const [image, setImage] = useState(api.example.getRandomImage.useQuery(undefined, {
-  //   refetchInterval: false,
-  //   refetchOnReconnect: false,
-  //   refetchOnWindowFocus: false,
-  // }))
-
-  
-  const {data: image, refetch, isLoading} = api.example.getImageByID.useQuery(props, {
+  const [id, setId] = useState(props.id);
+  const {data: image, refetch, isLoading} = api.example.getImageByID.useQuery({id: id}, {
     refetchInterval: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
   });
   
+  function handleClick() {
+    setId(getRandomId([]));
+  }
+
   return (
-    <button className="backdrop-invert hover:opacity-75">
+    <button onClick={handleClick} className="backdrop-invert hover:opacity-75">
       <img src={image?.url} className="col-span-1 object-cover w-32 h-32" alt="Grid Image" />
     </button>
   )
