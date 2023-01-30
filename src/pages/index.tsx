@@ -78,9 +78,11 @@ const CaptchaImage = (props: {id: number}) => {
   }
 
   return (
-    <button onClick={handleClick} className="backdrop-invert hover:opacity-75">
-      <img src={image?.url} className="col-span-1 object-cover w-32 h-32" alt="Grid Image" />
-    </button>
+    <div className={`flex flex-col items-center duration-1000 transition-opacity ${isLoading == true ? 'opacity-0' : ''}`}>
+      <button onClick={handleClick} disabled={isLoading} className="backdrop-invert hover:opacity-75">
+        <img src={image?.url} className="col-span-1 object-cover w-32 h-32" alt="" />
+      </button>
+    </div> 
   )
 }
 
