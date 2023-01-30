@@ -8,7 +8,7 @@ import { getInitialIds, getRandomId } from "../utils/getInitialIds";
 import Trpc from "./api/trpc/[trpc]";
 
 const Home: NextPage = () => {
-  const ids = getInitialIds();
+  const [ids, setIds] = useState(getInitialIds());
 
   return (
     <>
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
           </div>
           <div className="p-2 border border-gray-300">
             <div className="flex flex-1">
-              <button className="group hover:bg-gray-200 active:bg-gray-300">
+              <button onClick={() => setIds(getInitialIds())} className="group hover:bg-gray-200 active:bg-gray-300">
                 <svg className="h-8 w-8 m-2 fill-current text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="M17.65 6.35A7.958 7.958 0 0 0 12 4a8 8 0 0 0-8 8 8 8 0 0 0 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18a6 6 0 0 1-6-6 6 6 0 0 1 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35Z"/>
                 </svg>
