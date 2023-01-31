@@ -28,7 +28,7 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className="pt-2">
-              <div className="grid grid-cols-3 gap-1">
+              <div className="grid grid-cols-3 gap-1 h-[392px] w-[392px]">
                 {ids && ids.map((id) => (
                   <CaptchaImage key={id} id={id}/>
                 ))
