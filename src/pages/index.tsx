@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 import { type NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { api } from "../utils/api";
@@ -80,7 +80,7 @@ const CaptchaImage = (props: {id: number}) => {
   return (
     <div className={`flex flex-col items-center duration-1000 transition-opacity ${isLoading == true ? 'opacity-0' : ''}`}>
       <button onClick={handleClick} disabled={isLoading} className="backdrop-invert hover:opacity-75">
-        <img src={image?.url} className="col-span-1 object-cover w-32 h-32" alt="" />
+        {image && <Image src={image.url} width={128} height={128} priority={true} className="col-span-1 object-cover w-32 h-32" alt="Captcha Image" />}
       </button>
     </div> 
   )
