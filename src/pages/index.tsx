@@ -10,6 +10,12 @@ import Trpc from "./api/trpc/[trpc]";
 const Home: NextPage = () => {
   const [ids, setIds] = useState(getInitialIds());
 
+  const vote = (selectedId: number) => {
+    const newItems = [...ids];
+    newItems[selectedId] = getRandomId(ids);
+    setIds(newItems);
+  };
+
   return (
     <>
       <Head>
@@ -29,8 +35,8 @@ const Home: NextPage = () => {
             </div>
             <div className="pt-2">
               <div className="grid grid-cols-3 gap-1 h-[392px] w-[392px]">
-                {ids && ids.map((id) => (
-                  <CaptchaImage key={id} id={id}/>
+                {ids && ids.map((id, index) => (
+                  <CaptchaImage key={index} index={index} ids={ids} vote={() => vote(index)}/>
                 ))
                 }
               </div>
@@ -62,24 +68,29 @@ const Home: NextPage = () => {
   );
 };
 
-const CaptchaImage = (props: {id: number}) => {
+const CaptchaImage = (props: {index: number, ids: number[], vote: () => void}) => {
 
   // type returnType = ReturnType<typeof api.example.getImageByID.useQuery>
 
-  const [id, setId] = useState(props.id);
+  // const [id, setId] = useState(props.ids[props.index]);
+
+  //Check because Typescript is complaining 
+  const id = props.ids[props.index]  
+  if (id == undefined) return (<div />);
   const {data: image, refetch, isLoading} = api.example.getImageByID.useQuery({id: id}, {
     refetchInterval: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
-  });
+  });  
   
-  function handleClick() {
-    setId(getRandomId([]));
-  }
+  // function handleClick() {
+    
+  //   setId(getRandomId(props.ids));
+  // }
 
   return (
     <div className={`flex flex-col items-center duration-1000 transition-opacity ${isLoading == true ? 'opacity-0' : ''}`}>
-      <button onClick={handleClick} disabled={isLoading} className="backdrop-invert hover:opacity-75">
+      <button onClick={() => props.vote()} disabled={isLoading} className="backdrop-invert hover:opacity-75">
         {image && <Image src={image.url} width={128} height={128} priority={true} className="col-span-1 object-cover w-32 h-32" alt="Captcha Image" />}
       </button>
     </div> 
