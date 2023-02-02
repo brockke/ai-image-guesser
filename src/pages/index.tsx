@@ -79,10 +79,6 @@ const Home: NextPage = () => {
 
 const CaptchaImage = (props: {index: number, ids: number[], error:string, vote: () => void}) => {
 
-  // type returnType = ReturnType<typeof api.example.getImageByID.useQuery>
-
-  // const [id, setId] = useState(props.ids[props.index]);
-
   //Check because Typescript is complaining 
   const id = props.ids[props.index]  
   if (id == undefined) return (<div />);
@@ -91,11 +87,6 @@ const CaptchaImage = (props: {index: number, ids: number[], error:string, vote: 
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
   });  
-  
-  // function handleClick() {
-    
-  //   setId(getRandomId(props.ids));
-  // }
 
   return (
     <div className={`flex flex-col items-center duration-1000 transition-opacity ${isLoading == true ? 'opacity-0' : ''}`}>
