@@ -7,14 +7,36 @@ import { api } from "../utils/api";
 import { getInitialIds, getRandomId } from "../utils/getInitialIds";
 
 const Home: NextPage = () => {
+  const START_OF_AI_IDS = 558;
+  const WIN_RATIO = 0.5;
+
   const [ids, setIds] = useState(getInitialIds());
   const [errorMsg, setErrorMsg] = useState("");
+  const [correctGuess, setCorrectGuess] = useState(0);
+  const [incorrectGuess, setIncorrectGuess] = useState(0);
+  const [totalGuess, setTotalGuess] = useState(0);
 
   const vote = (selectedId: number) => {
+    console.log(ids[selectedId], correctGuess, incorrectGuess, totalGuess)
+    if (ids[selectedId]! >= START_OF_AI_IDS)
+      setCorrectGuess(correctGuess + 1)
+    else
+      setIncorrectGuess(incorrectGuess + 1)
+
+    setTotalGuess(totalGuess + 1)
     const newItems = [...ids];
     newItems[selectedId] = getRandomId(ids);
     setIds(newItems);
   };
+
+  const verifyClick = () => {
+    setIncorrectGuess(incorrectGuess + ids.reduce((total,x) => (x >= START_OF_AI_IDS ? total+1 : total), 0))
+    if (((correctGuess - incorrectGuess) / totalGuess) >= WIN_RATIO)
+      setErrorMsg("SUCCESS") 
+    else
+      setErrorMsg("Failed Captcha")
+    // console.log(correctGuess, incorrectGuess, totalGuess);
+  }
 
   return (
     <>
@@ -62,13 +84,7 @@ const Home: NextPage = () => {
                   <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10zm0-2a8 8 0 1 0 0-16a8 8 0 0 0 0 16zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"/>
                 </svg>
               </button>
-              <button onClick={() => {
-                  if (ids.every((id) => id <= 558))
-                    setErrorMsg("SUCCESS") 
-                  else
-                    setErrorMsg("Failed Captcha")
-
-                }} disabled={errorMsg !== ""} className="bg-blue-400 px-8 text-white rounded-sm ml-auto hover:bg-blue-500 active:bg-blue-600">Verify</button>
+              <button onClick={() => verifyClick()} disabled={errorMsg !== ""} className="bg-blue-400 px-8 text-white rounded-sm ml-auto hover:bg-blue-500 active:bg-blue-600">Verify</button>
             </div>
           </div>
         </div>
