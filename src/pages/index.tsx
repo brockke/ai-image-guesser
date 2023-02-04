@@ -17,7 +17,6 @@ const Home: NextPage = () => {
   const [totalGuess, setTotalGuess] = useState(0);
 
   const vote = (selectedId: number) => {
-    console.log(ids[selectedId], correctGuess, incorrectGuess, totalGuess)
     if (ids[selectedId]! >= START_OF_AI_IDS)
       setCorrectGuess(correctGuess + 1)
     else
@@ -35,7 +34,6 @@ const Home: NextPage = () => {
       setErrorMsg("SUCCESS") 
     else
       setErrorMsg("Failed Captcha")
-    // console.log(correctGuess, incorrectGuess, totalGuess);
   }
 
   return (
