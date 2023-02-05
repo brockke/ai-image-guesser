@@ -27,11 +27,14 @@ const Home: NextPage = () => {
   };
 
   const verifyClick = () => {
-    setIncorrectGuess(incorrectGuess + ids.reduce((total,x) => (x >= START_OF_AI_IDS ? total+1 : total), 0))
-    if ((correctGuess - incorrectGuess) <= 0)
+    // Have to add up all the incorrect guesses here because setState runs async 
+    // and it was causing incorrect values set to incorrectGuess at the end here  
+    if ((correctGuess - (incorrectGuess + ids.reduce((total,x) => (x >= START_OF_AI_IDS ? total+1 : total), 0))) >= 0)
       setErrorMsg("SUCCESS") 
     else
       setErrorMsg("Failed Captcha")
+
+    console.log(correctGuess, incorrectGuess)
   }
 
   return (
@@ -96,7 +99,7 @@ const Home: NextPage = () => {
 
 const CaptchaImage = (props: {index: number, ids: number[], error:string, vote: () => void}) => {
 
-  //Check because Typescript is complaining 
+  // Check because Typescript is complaining 
   const id = props.ids[props.index]  
   if (id == undefined) return (<div />);
   const {data: image, isLoading} = api.example.getImageByID.useQuery({id: id}, {
