@@ -14,7 +14,6 @@ const Home: NextPage = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [correctGuess, setCorrectGuess] = useState(0);
   const [incorrectGuess, setIncorrectGuess] = useState(0);
-  const [totalGuess, setTotalGuess] = useState(0);
 
   const vote = (selectedId: number) => {
     if (ids[selectedId]! >= START_OF_AI_IDS)
@@ -22,7 +21,6 @@ const Home: NextPage = () => {
     else
       setIncorrectGuess(incorrectGuess + 1)
 
-    setTotalGuess(totalGuess + 1)
     const newItems = [...ids];
     newItems[selectedId] = getRandomId(ids);
     setIds(newItems);
@@ -30,7 +28,7 @@ const Home: NextPage = () => {
 
   const verifyClick = () => {
     setIncorrectGuess(incorrectGuess + ids.reduce((total,x) => (x >= START_OF_AI_IDS ? total+1 : total), 0))
-    if (((correctGuess - incorrectGuess) / totalGuess) >= WIN_RATIO)
+    if ((correctGuess - incorrectGuess) <= 0)
       setErrorMsg("SUCCESS") 
     else
       setErrorMsg("Failed Captcha")
@@ -72,7 +70,6 @@ const Home: NextPage = () => {
                 setErrorMsg("");
                 setCorrectGuess(0);
                 setIncorrectGuess(0);
-                setTotalGuess(0);
                 }} className="group hover:bg-gray-200 active:bg-gray-300">
                 <svg className="h-8 w-8 m-2 fill-current text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="M17.65 6.35A7.958 7.958 0 0 0 12 4a8 8 0 0 0-8 8 8 8 0 0 0 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18a6 6 0 0 1-6-6 6 6 0 0 1 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35Z"/>
