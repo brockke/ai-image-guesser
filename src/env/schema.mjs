@@ -8,6 +8,9 @@ import { z } from "zod";
 export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
+  aws_access_key_id: z.string(),
+  aws_secret_access_key: z.string(),
+  aws_s3_bucket_name: z.string(),
 });
 
 /**
@@ -18,6 +21,9 @@ export const serverSchema = z.object({
 export const serverEnv = {
   DATABASE_URL: process.env.DATABASE_URL,
   NODE_ENV: process.env.NODE_ENV,
+  aws_access_key_id: process.env.aws_access_key_id,
+  aws_secret_access_key: process.env.aws_secret_access_key,
+  aws_s3_bucket_name: process.env.aws_s3_bucket_name,
 };
 
 /**

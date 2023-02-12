@@ -109,7 +109,7 @@ const CaptchaImage = (props: {index: number, ids: number[], error:string, vote: 
   // Check because Typescript is complaining 
   const id = props.ids[props.index]  
   if (id == undefined) return (<div />);
-  const {data: image, isLoading} = api.example.getImageByID.useQuery({id: id}, {
+  const {data: url, isLoading} = api.example.getImageByID.useQuery({id: id}, {
     refetchInterval: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -118,7 +118,7 @@ const CaptchaImage = (props: {index: number, ids: number[], error:string, vote: 
   return (
     <div className={`flex flex-col items-center duration-1000 transition-opacity ${isLoading == true ? 'opacity-0' : ''}`}>
       <button onClick={() => props.vote()} disabled={isLoading || (props.error !== "")} className="backdrop-invert hover:opacity-75">
-        {image && <Image src={image.url} width={128} height={128} priority={true} className="col-span-1 object-cover w-32 h-32" alt="Captcha Image" />}
+        {url && <Image src={url} width={128} height={128} priority={true} className="col-span-1 object-cover w-32 h-32" alt="Captcha Image" />}
       </button>
     </div> 
   )
