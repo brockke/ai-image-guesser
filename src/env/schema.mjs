@@ -6,7 +6,9 @@ import { z } from "zod";
  * This way you can ensure the app isn't built with invalid env vars.
  */
 export const serverSchema = z.object({
-  DATABASE_URL: z.string().url(),
+  // DATABASE_URL: z.string().url(),
+  TURSO_DATABASE_URL: z.string().url(),
+  TURSO_AUTH_TOKEN: z.string(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   aws_access_key_id: z.string(),
   aws_secret_access_key: z.string(),
@@ -19,7 +21,9 @@ export const serverSchema = z.object({
  * @type {{ [k in keyof z.infer<typeof serverSchema>]: z.infer<typeof serverSchema>[k] | undefined }}
  */
 export const serverEnv = {
-  DATABASE_URL: process.env.DATABASE_URL,
+  // DATABASE_URL: process.env.DATABASE_URL,
+  TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
+  TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
   NODE_ENV: process.env.NODE_ENV,
   aws_access_key_id: process.env.aws_access_key_id,
   aws_secret_access_key: process.env.aws_secret_access_key,
