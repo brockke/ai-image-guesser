@@ -19,18 +19,20 @@ export const exampleRouter = createTRPCRouter({
   }),
   testMutation: publicProcedure
     .mutation(async ({ ctx }) => {
-      return await ctx.prisma.example.create({data: {}});
+      return await ctx.prisma.example.create({ data: {} });
     }),
-  starMutation: publicProcedure
-    .input(z.object({name: z.string(), constellation: z.string()}))
-    .mutation(async ({ctx, input}) => {
-      return await ctx.prisma.star.create({data: {
-        name: input.name,
-        constellation: input.constellation
-      }})
-    }),
+  // starMutation: publicProcedure
+  //   .input(z.object({ name: z.string(), constellation: z.string() }))
+  //   .mutation(async ({ ctx, input }) => {
+  //     return await ctx.prisma.star.create({
+  //       data: {
+  //         name: input.name,
+  //         constellation: input.constellation
+  //       }
+  //     })
+  //   }),
   getImageByID: publicProcedure
-    .input(z.object({id: z.number()}))
+    .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
       const image = await ctx.prisma.image.findFirst({
         where: {
@@ -40,7 +42,7 @@ export const exampleRouter = createTRPCRouter({
 
       if (env.aws_access_key_id == undefined || env.aws_secret_access_key == undefined) return;
       const client = new S3Client({
-        region: 'us-east-1', 
+        region: 'us-east-1',
         credentials: {
           accessKeyId: env.aws_access_key_id,
           secretAccessKey: env.aws_secret_access_key,
@@ -49,9 +51,9 @@ export const exampleRouter = createTRPCRouter({
 
       if (image == null) return;
       if (image.key == undefined) return;
-      const command = new GetObjectCommand({Bucket: env.aws_s3_bucket_name, Key: image.key});
+      const command = new GetObjectCommand({ Bucket: env.aws_s3_bucket_name, Key: image.key });
       const url = await getSignedUrl(client, command, { expiresIn: 5 * 60 });
-      
+
       return url;
     }),
   getRandomImage: publicProcedure
